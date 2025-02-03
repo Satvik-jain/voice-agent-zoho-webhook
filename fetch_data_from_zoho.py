@@ -8,11 +8,9 @@ def fetch_data_from_zoho(filters):
         "Authorization": f"Bearer {get_access_token()}",
         "Content-Type": "application/json"
     }
-    
-    # Build dynamic search criteria based on the filters
+
     criteria = []
-    
-    # Matching Supabase filters to Zoho CRM field names
+
     if 'bedrooms' in filters:
         criteria.append(f"(Bedrooms:equals:{filters['bedrooms']})")
     if 'bathrooms' in filters:
@@ -51,23 +49,18 @@ def fetch_data_from_zoho(filters):
         criteria.append(f"(Country:equals:{filters['country']})")
     if 'moving_date' in filters:
         criteria.append(f"(Moving_Date:equals:{filters['moving_date']})")
-    
-    # If no filters are applied, search all records (can be adjusted)
+
     search_criteria = " and ".join(criteria) if criteria else ""
 
-    # Construct the API request URL
     url = f"{ZOHO_BASE_URL}/Listings/search?criteria={search_criteria}"
-    
-    # Send GET request to Zoho API
+
     response = requests.get(url, headers=headers)
 
     if response.status_code == 200:
-        # If response is successful, extract data
         data = response.json().get("data", [])
         if data:
-            return data  # Return the listings
+            return data
         else:
             return [{"message": "No relevant data found."}]
     else:
-        # Handle error if request fails
         return [{"message": f"Error fetching data: {response.text}"}]

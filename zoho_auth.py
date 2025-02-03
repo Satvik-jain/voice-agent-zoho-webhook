@@ -8,7 +8,7 @@ TOKEN_FILE = "zoho_tokens.json"
 CLIENT_ID = os.getenv("ZOHO_CLIENT_ID")
 CLIENT_SECRET = os.getenv("ZOHO_CLIENT_SECRET")
 REFRESH_TOKEN = os.getenv("ZOHO_REFRESH_TOKEN")
-TOKEN_URL = "https://accounts.zoho.com/oauth/v2/token"
+TOKEN_URL = "https://accounts.zoho.in/oauth/v2/token"
 
 def read_tokens():
     if os.path.exists(TOKEN_FILE):
@@ -38,6 +38,7 @@ def get_access_token():
 
     if response.status_code == 200:
         new_tokens = response.json()
+        print(new_tokens)
         new_tokens["expires_at"] = time.time() + new_tokens["expires_in"] - 60  
         
         write_tokens(new_tokens)
