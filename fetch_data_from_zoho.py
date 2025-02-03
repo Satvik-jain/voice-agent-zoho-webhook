@@ -1,7 +1,7 @@
 import requests
 from zoho_auth import get_access_token
 
-ZOHO_BASE_URL = "https://www.zohoapis.com/crm/v2"
+ZOHO_BASE_URL = "https://www.zohoapis.in/crm/v7"
 
 def fetch_data_from_zoho(filters):
     headers = {
@@ -28,17 +28,19 @@ def fetch_data_from_zoho(filters):
     if 'swimming_pool' in filters:
         criteria.append(f"(Swimming_Pool:equals:{filters['swimming_pool']})")
     if 'number_of_parking_spaces' in filters:
-        criteria.append(f"(Number_of_Parking_Spaces:equals:{filters['number_of_parking_spaces']})")
+        criteria.append(f"(Number_of_Parking_Space:equals:{filters['number_of_parking_spaces']})")
     if 'garden' in filters:
         criteria.append(f"(Garden:equals:{filters['garden']})")
     if 'gym_facility' in filters:
         criteria.append(f"(Gym_Facility:equals:{filters['gym_facility']})")
     if 'year_built' in filters:
         criteria.append(f"(Year_Built:equals:{filters['year_built']})")
+
     if 'rent_min' in filters:
-        criteria.append(f"(Rent_per_month:greater_than_equal:{filters['rent_min']})")
+        criteria.append(f"(Rent_per_month_in_USD:greater_equal:{filters['rent_min']})")
     if 'rent_max' in filters:
-        criteria.append(f"(Rent_per_month:less_than_equal:{filters['rent_max']})")
+        criteria.append(f"(Rent_per_month_in_USD:less_equal:{filters['rent_max']})")
+
     if 'street_address' in filters:
         criteria.append(f"(Street_Address:contains:{filters['street_address']})")
     if 'city' in filters:
@@ -51,6 +53,8 @@ def fetch_data_from_zoho(filters):
         criteria.append(f"(Moving_Date:equals:{filters['moving_date']})")
 
     search_criteria = " and ".join(criteria) if criteria else ""
+
+    print(f"Search Criteria: {search_criteria}")
 
     url = f"{ZOHO_BASE_URL}/Listings/search?criteria={search_criteria}"
 
