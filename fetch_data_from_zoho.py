@@ -59,7 +59,10 @@ def fetch_data_from_zoho(filters):
     url = f"{ZOHO_BASE_URL}/Listings/search?criteria={search_criteria}"
 
     response = requests.get(url, headers=headers)
-
+    print(response)
+    print()
+    if response.status_code == 204:
+        return [{"message": "No relevant data found."}]
     if response.status_code == 200:
         data = response.json().get("data", [])
         if data:
