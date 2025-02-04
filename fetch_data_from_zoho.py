@@ -37,9 +37,9 @@ def fetch_data_from_zoho(filters):
         criteria.append(f"(Year_Built:equals:{filters['year_built']})")
 
     if 'rent_min' in filters:
-        criteria.append(f"(Rent_per_month_in_USD:greater_equal:{filters['rent_min']})")
+        criteria.append(f"(Rent_per_month_in_USD1:greater_equal:{filters['rent_min']})")
     if 'rent_max' in filters:
-        criteria.append(f"(Rent_per_month_in_USD:less_equal:{filters['rent_max']})")
+        criteria.append(f"(Rent_per_month_in_USD1:less_equal:{filters['rent_max']})")
 
     if 'street_address' in filters:
         criteria.append(f"(Street_Address:contains:{filters['street_address']})")
