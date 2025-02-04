@@ -1,5 +1,6 @@
 import requests
 from zoho_auth import get_access_token
+from response_parser import response_parser
 
 ZOHO_BASE_URL = "https://www.zohoapis.in/crm/v7"
 
@@ -66,7 +67,7 @@ def fetch_data_from_zoho(filters):
     if response.status_code == 200:
         data = response.json().get("data", [])
         if data:
-            return data
+            return response_parser(data)
         else:
             return [{"message": "No relevant data found."}]
     else:
