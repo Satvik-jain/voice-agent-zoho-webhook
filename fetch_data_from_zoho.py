@@ -68,6 +68,7 @@ def fetch_data_from_zoho(filters):
         data = response.json().get("data", [])
         if data:
             return response_parser(data)
+            # return data
         else:
             return [{"message": "No relevant data found."}]
     else:

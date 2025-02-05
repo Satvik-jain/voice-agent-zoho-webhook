@@ -4,6 +4,7 @@ def response_parser(data):
     
     for entry in data:
         filtered_entry = {
+            "Property_ID": entry.get("id"),
             "Street_Address": entry.get("Property_ID"),
             "City": entry.get("City"),
             "Province": entry.get("Province"),
